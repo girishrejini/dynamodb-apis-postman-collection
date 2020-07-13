@@ -1,0 +1,533 @@
+{
+	"info": {
+		"_postman_id": "980d8d85-c55d-468a-a679-f13059b3ef3f",
+		"name": "DynamoDB APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Table (On-Demand mode)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Amz-Target",
+						"value": "DynamoDB_20120810.CreateTable",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"TableName\": \"Books\",\n    \"AttributeDefinitions\": [\n        {\n            \"AttributeName\": \"PK\",\n            \"AttributeType\": \"S\"\n        },\n        {\n            \"AttributeName\": \"SK\",\n            \"AttributeType\": \"S\"\n        }\n    ],\n    \"KeySchema\": [\n        {\n            \"AttributeName\": \"PK\",\n            \"KeyType\": \"HASH\"\n        },\n        {\n            \"AttributeName\": \"SK\",\n            \"KeyType\": \"RANGE\"\n        }\n    ],\n    \"BillingMode\":\"PAY_PER_REQUEST\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dynamodb.us-west-2.amazonaws.com",
+					"protocol": "https",
+					"host": [
+						"dynamodb",
+						"us-west-2",
+						"amazonaws",
+						"com"
+					]
+				},
+				"description": "Let's create a table. We'll name it *Books*.\n\n&nbsp;\n\n**KeySchema** represents the primary key. In this example, we have a 'composite' primary key, which means we have both Partition Key (KeyType: HASH) and Sort Key (KeyType: RANGE). The other option is to have a 'simple' primary key, which means there will only be a Partition Key. No sort key.\n\n&nbsp;\n\n**AttributeDefintions** represents the data types of the primary key. They can only be of type String, Number, or Binary.\n\n&nbsp;\n\n**BillingMode** represents how you would like to pay for it. We have chosen '[On-Demand mode](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadWriteCapacityMode.html#HowItWorks.ProvisionedThroughput.Manual)' which means you are paying per request. The other option is '[Provisioned mode](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadWriteCapacityMode.html#HowItWorks.ProvisionedThroughput.Manual)'. See next request.\n\n&nbsp;\n\nCheck out the Headers tab. The **X-Amz-Target** should be set to\n**DynamoDB_20120810.CreateTable** .\n\n&nbsp;\n\nFor the rest of the API reference, check out the docs:\n[https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_CreateTable.html](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_CreateTable.html)"
+			},
+			"response": []
+		},
+		{
+			"name": "Describe Table",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Amz-Target",
+						"value": "DynamoDB_20120810.DescribeTable",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"TableName\": \"Books\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dynamodb.us-west-2.amazonaws.com",
+					"protocol": "https",
+					"host": [
+						"dynamodb",
+						"us-west-2",
+						"amazonaws",
+						"com"
+					]
+				},
+				"description": "**API reference:**\n[https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeTable.html](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeTable.html)"
+			},
+			"response": []
+		},
+		{
+			"name": "Put Item",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Amz-Target",
+						"value": "DynamoDB_20120810.PutItem",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"TableName\": \"Books\",\n    \"Item\": {\n        \"PK\": {\n            \"S\": \"Author#Charles Dickens\"\n        },\n        \"SK\": {\n            \"S\": \"Book#A Tale of Two Cities\"\n        },\n        \"YearFirstPublished\": {\n            \"S\": \"1859\"\n        },\n        \"ApproxSales\": {\n            \"N\": \"200000000\"\n        },\n        \"OriginalLanguage\": {\n            \"S\": \"English\"\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dynamodb.us-west-2.amazonaws.com",
+					"protocol": "https",
+					"host": [
+						"dynamodb",
+						"us-west-2",
+						"amazonaws",
+						"com"
+					]
+				},
+				"description": "**API reference:**\n[https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html)"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Item",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Amz-Target",
+						"type": "text",
+						"value": "DynamoDB_20120810.GetItem"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"TableName\": \"Books\",\n    \"Key\": {\n        \"PK\": {\n            \"S\": \"Author#Charles Dickens\"\n        },\n        \"SK\": {\n            \"S\": \"Book#A Tale of Two Cities\"\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dynamodb.us-west-2.amazonaws.com",
+					"protocol": "https",
+					"host": [
+						"dynamodb",
+						"us-west-2",
+						"amazonaws",
+						"com"
+					]
+				},
+				"description": "**API reference:**\n[https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_GetItem.html](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_GetItem.html)"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Item (no condition expression)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Amz-Target",
+						"type": "text",
+						"value": "DynamoDB_20120810.UpdateItem"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"TableName\": \"Books\",\n    \"Key\": {\n        \"PK\": {\n            \"S\": \"Author#Charles Dickens\"\n        },\n        \"SK\": {\n            \"S\": \"Book#A Tale of Two Cities\"\n        }\n    },\n    \"UpdateExpression\": \"set TotalSales = :new_total_sales\",\n    \"ExpressionAttributeValues\": {\n        \":new_total_sales\": {\n            \"N\": \"65000000\"\n        }\n    },\n    \"ReturnValues\": \"ALL_NEW\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dynamodb.us-west-2.amazonaws.com",
+					"protocol": "https",
+					"host": [
+						"dynamodb",
+						"us-west-2",
+						"amazonaws",
+						"com"
+					]
+				},
+				"description": "**API reference:**\n[https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Item (with condition expression)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Amz-Target",
+						"type": "text",
+						"value": "DynamoDB_20120810.UpdateItem"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"TableName\": \"Books\",\n    \"Key\": {\n        \"PK\": {\n            \"S\": \"Author#Charles Dickens\"\n        },\n        \"SK\": {\n            \"S\": \"Book#A Tale of Two Cities\"\n        }\n    },\n    \"UpdateExpression\": \"set #rank = :new_rank\",\n    \"ConditionExpression\": \"TotalSales >= :target_sales_for_gold\",\n    \"ExpressionAttributeNames\": {\n        \"#rank\": \"Rank\"\n    },\n    \"ExpressionAttributeValues\": {\n        \":new_rank\": {\n            \"S\": \"Gold\"\n        },\n        \":target_sales_for_gold\": {\n            \"N\": \"6500000\"\n        }\n    },\n    \"ReturnValues\": \"ALL_NEW\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dynamodb.us-west-2.amazonaws.com",
+					"protocol": "https",
+					"host": [
+						"dynamodb",
+						"us-west-2",
+						"amazonaws",
+						"com"
+					]
+				},
+				"description": "**API reference:**\n[https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Item (map attribute does not exist; adds it)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Amz-Target",
+						"type": "text",
+						"value": "DynamoDB_20120810.UpdateItem"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"TableName\": \"Books\",\n    \"Key\": {\n        \"PK\": {\n            \"S\": \"Author#Charles Dickens\"\n        },\n        \"SK\": {\n            \"S\": \"Book#A Tale of Two Cities\"\n        }\n    },\n    \"UpdateExpression\": \"set PublishDetails = :new_value\",\n    \"ExpressionAttributeValues\": {\n        \":new_value\": {\n            \"M\": {\n                \"ISBN\": {\"S\": \"9780316769488\"}\n            }\n        }\n    },\n    \"ReturnValues\": \"ALL_NEW\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dynamodb.us-west-2.amazonaws.com",
+					"protocol": "https",
+					"host": [
+						"dynamodb",
+						"us-west-2",
+						"amazonaws",
+						"com"
+					]
+				},
+				"description": "**API reference:**\n[https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Item (property in map attribute does not exist; adds it)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Amz-Target",
+						"type": "text",
+						"value": "DynamoDB_20120810.UpdateItem"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"TableName\": \"Books\",\n    \"Key\": {\n        \"PK\": {\n            \"S\": \"Author#Charles Dickens\"\n        },\n        \"SK\": {\n            \"S\": \"Book#A Tale of Two Cities\"\n        }\n    },\n    \"UpdateExpression\": \"set PublishDetails.Publisher = :publisher_name\",\n    \"ExpressionAttributeValues\": {\n        \":publisher_name\": {\"S\": \"Little, Brown and Company\"}\n    },\n    \"ReturnValues\": \"ALL_NEW\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dynamodb.us-west-2.amazonaws.com",
+					"protocol": "https",
+					"host": [
+						"dynamodb",
+						"us-west-2",
+						"amazonaws",
+						"com"
+					]
+				},
+				"description": "**API reference:**\n[https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Item (item does not exist; adds it)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Amz-Target",
+						"type": "text",
+						"value": "DynamoDB_20120810.UpdateItem"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"TableName\": \"Books\",\n    \"Key\": {\n        \"PK\": {\n            \"S\": \"Does-not-exist.Will-be-created\"\n        },\n        \"SK\": {\n            \"S\": \"Also-does-not-exist.Will-be-created\"\n        }\n    },\n    \"UpdateExpression\": \"set Map_Attr_That_Does_Not_Exist = :test_json_value\",\n    \"ExpressionAttributeValues\": {\n        \":test_json_value\": {\n            \"M\": {\n                \"SomeKey\": {\"S\": \"SomeValue\"}, \n                \"SomeOtherKey\": {\"S\": \"SomeOtherValue\"}\n            }\n        }\n    },\n    \"ReturnValues\": \"ALL_NEW\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dynamodb.us-west-2.amazonaws.com",
+					"protocol": "https",
+					"host": [
+						"dynamodb",
+						"us-west-2",
+						"amazonaws",
+						"com"
+					]
+				},
+				"description": "**API reference:**\n[https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)"
+			},
+			"response": []
+		},
+		{
+			"name": "Batch Write Item (Put & Delete)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Amz-Target",
+						"type": "text",
+						"value": "DynamoDB_20120810.BatchWriteItem"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"RequestItems\": {\n        \"Books\": [\n            {\n                \"PutRequest\" : {\n                    \"Item\": {\n                        \"PK\": {\n                            \"S\": \"Author#George Orwell\"\n                        },\n                        \"SK\": {\n                            \"S\": \"Book#Nineteen Eighty-Four\"\n                        },\n                        \"YearFirstPublished\": {\n                            \"S\": \"1949\"\n                        },\n                        \"ApproxSales\": {\n                            \"N\": \"30000000\"\n                        },\n                        \"OriginalLanguage\": {\n                            \"S\": \"English\"\n                        }\n                    }\n                }\n            },\n            {\n                \"PutRequest\" : {\n                    \"Item\": {\n                        \"PK\": {\n                            \"S\": \"Author#George Orwell\"\n                        },\n                        \"SK\": {\n                            \"S\": \"Book#Animal Farm\"\n                        },\n                        \"YearFirstPublished\": {\n                            \"S\": \"1945\"\n                        },\n                        \"ApproxSales\": {\n                            \"N\": \"20000000\"\n                        },\n                        \"OriginalLanguage\": {\n                            \"S\": \"English\"\n                        }\n                    }\n                }\n            },\n            {\n                \"PutRequest\" : {\n                    \"Item\": {\n                        \"PK\": {\n                            \"S\": \"Author#J. K. Rowling\"\n                        },\n                        \"SK\": {\n                            \"S\": \"Book#Harry Potter and the Philosopher's Stone\"\n                        },\n                        \"YearFirstPublished\": {\n                            \"S\": \"1997\"\n                        },\n                        \"ApproxSales\": {\n                            \"N\": \"120000000\"\n                        },\n                        \"OriginalLanguage\": {\n                            \"S\": \"English\"\n                        }\n                    }\n                }\n            },\n            {\n                \"PutRequest\" : {\n                    \"Item\": {\n                        \"PK\": {\n                            \"S\": \"Author#J. K. Rowling\"\n                        },\n                        \"SK\": {\n                            \"S\": \"Book#Harry Potter and the Chamber of Secrets\"\n                        },\n                        \"YearFirstPublished\": {\n                            \"S\": \"1998\"\n                        },\n                        \"ApproxSales\": {\n                            \"N\": \"77000000\"\n                        },\n                        \"OriginalLanguage\": {\n                            \"S\": \"English\"\n                        }\n                    }\n                }\n            },\n            {\n                \"PutRequest\" : {\n                    \"Item\": {\n                        \"PK\": {\n                            \"S\": \"Author#J. K. Rowling\"\n                        },\n                        \"SK\": {\n                            \"S\": \"Book#Harry Potter and the Goblet of Fire\"\n                        },\n                        \"YearFirstPublished\": {\n                            \"S\": \"2000\"\n                        },\n                        \"ApproxSales\": {\n                            \"N\": \"65000000\"\n                        },\n                        \"OriginalLanguage\": {\n                            \"S\": \"English\"\n                        }\n                    }\n                }\n            },\n            {\n                \"DeleteRequest\" : {\n                    \"Key\": {\n                        \"PK\": {\n                            \"S\": \"Author#Charles Dickens\"\n                        },\n                        \"SK\": {\n                            \"S\": \"Book#A Tale of Two Cities\"\n                        }\n                    }\n                }\n            }\n        ]\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dynamodb.us-west-2.amazonaws.com",
+					"protocol": "https",
+					"host": [
+						"dynamodb",
+						"us-west-2",
+						"amazonaws",
+						"com"
+					]
+				},
+				"description": "**API reference:**\n[https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchWriteItem.html](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchWriteItem.html)"
+			},
+			"response": []
+		},
+		{
+			"name": "Scan",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Amz-Target",
+						"type": "text",
+						"value": "DynamoDB_20120810.Scan"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"TableName\": \"Books\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dynamodb.us-west-2.amazonaws.com",
+					"protocol": "https",
+					"host": [
+						"dynamodb",
+						"us-west-2",
+						"amazonaws",
+						"com"
+					]
+				},
+				"description": "**API reference:**\n[https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html)"
+			},
+			"response": []
+		},
+		{
+			"name": "Query",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Amz-Target",
+						"value": "DynamoDB_20120810.Query",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"TableName\": \"Books\",\n    \"Limit\": 3,\n    \"ConsistentRead\": true,\n    \"ProjectionExpression\": \"PK, SK, PublishYear, #Rank, TotalSales\",\n    \"KeyConditionExpression\": \"PK = :pk and begins_with(SK, :search_text)\",\n    \"ExpressionAttributeNames\": {\"#Rank\": \"Rank\"},\n    \"ExpressionAttributeValues\": {\n        \":pk\": {\"S\": \"Author#Charles Dickens\"},\n        \":search_text\": {\"S\": \"Book#A Tale\"}\n    },\n    \"ReturnConsumedCapacity\": \"TOTAL\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dynamodb.us-west-2.amazonaws.com",
+					"protocol": "https",
+					"host": [
+						"dynamodb",
+						"us-west-2",
+						"amazonaws",
+						"com"
+					]
+				},
+				"description": "**API reference:**\n[https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html)"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Item",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Amz-Target",
+						"value": "DynamoDB_20120810.DeleteItem",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"TableName\": \"Books\",\n    \"Key\": {\n        \"PK\": {\n            \"S\": \"Author#George Orwell\"\n        },\n        \"SK\": {\n            \"S\": \"Book#Nineteen Eighty-Four\"\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dynamodb.us-west-2.amazonaws.com",
+					"protocol": "https",
+					"host": [
+						"dynamodb",
+						"us-west-2",
+						"amazonaws",
+						"com"
+					]
+				},
+				"description": "**API reference:**\n[https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DeleteItem.html](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DeleteItem.html)"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Table",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Amz-Target",
+						"type": "text",
+						"value": "DynamoDB_20120810.DeleteTable"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"TableName\": \"Books\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dynamodb.us-west-2.amazonaws.com",
+					"protocol": "https",
+					"host": [
+						"dynamodb",
+						"us-west-2",
+						"amazonaws",
+						"com"
+					]
+				},
+				"description": "**API reference:**\n[https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DeleteTable.html](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DeleteTable.html)"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "awsv4",
+		"awsv4": [
+			{
+				"key": "region",
+				"value": "us-west-2",
+				"type": "string"
+			},
+			{
+				"key": "secretKey",
+				"value": "",
+				"type": "string"
+			},
+			{
+				"key": "accessKey",
+				"value": "",
+				"type": "string"
+			},
+			{
+				"key": "service",
+				"value": "dynamodb",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "0807b642-a1ca-448f-8270-6f3a1eece8e7",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "f918bd91-5df9-4866-9e1b-e1708c28ca65",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
