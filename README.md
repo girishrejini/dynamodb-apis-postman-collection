@@ -14,5 +14,6 @@ This repo has a Postman collection (JSON file) of some of the commonly used Dyna
 
 Watch this YouTube video below to learn how to use this collection to explore DynamoDB's APIs.
 
-
 [![DynamoDB API Explorer](http://img.youtube.com/vi/ekGHVk7Hiuo/0.jpg)](http://www.youtube.com/watch?v=ekGHVk7Hiuo "DynamoDB API Explorer")
+
+http://www.youtube.com/watch?v=ekGHVk7Hiuo
