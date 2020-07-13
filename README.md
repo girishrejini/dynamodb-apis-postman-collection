@@ -12,7 +12,7 @@ DynamoDB has built-in security, backup and restore, and in-memory caching. It ca
 
 This repo has a Postman collection (JSON file) of some of the commonly used DynamoDB APIs.
 
-Watch this YouTube video below to learn how to use this collection to explore DynamoDB's APIs.
+Watch this YouTube video below to learn how to import this collection to Postman and take the APIs for a test drive.
 
 [![DynamoDB API Explorer](http://img.youtube.com/vi/ekGHVk7Hiuo/0.jpg)](http://www.youtube.com/watch?v=ekGHVk7Hiuo "DynamoDB API Explorer")
 
